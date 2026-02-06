@@ -1,6 +1,8 @@
-import { useEffect, useState, useCallback, memo } from 'react'
+import { useEffect, useState, useCallback, memo, lazy, Suspense } from 'react'
 import { Menu, X } from 'lucide-react'
-import CTAButtons from './CTAButtons'
+
+// Lazy load CTAButtons to reduce initial bundle size
+const CTAButtons = lazy(() => import('./CTAButtons'))
 
 const Header = memo(function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -75,9 +77,11 @@ const Header = memo(function Header() {
             ))}
           </nav>
 
-          {/* Desktop CTA Buttons */}
+          {/* Desktop CTA Buttons - Lazy loaded */}
           <div className="hidden md:flex items-center">
-            <CTAButtons variant="header" />
+            <Suspense fallback={<div className="w-10 h-10" />}>
+              <CTAButtons variant="header" />
+            </Suspense>
           </div>
 
           {/* Mobile Menu Button */}
@@ -136,7 +140,9 @@ const Header = memo(function Header() {
                   Actions rapides :
                 </div>
                 <div className="space-y-2">
-                  <CTAButtons variant="cta" isMobileMenu={true} />
+                  <Suspense fallback={<div className="h-10" />}>
+                    <CTAButtons variant="cta" isMobileMenu={true} />
+                  </Suspense>
                 </div>
               </div>
             </nav>

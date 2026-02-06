@@ -13,9 +13,11 @@ import Footer from '../components/astro/Footer.astro';
 
 <Layout>
   <div class="min-h-screen bg-white">
-    <Header client:idle />
+    <!-- Header loads after idle to not block LCP -->
+    <Header client:only="react" />
     
     <main>
+      <!-- Hero renders immediately (Astro static) - this is the LCP element -->
       <Hero />
       <Services />
       <EmergencyCTA />

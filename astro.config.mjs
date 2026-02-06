@@ -15,7 +15,7 @@ export default defineConfig({
   compressHTML: true,
   build: {
     assets: '_assets',
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always', // Inline all CSS to avoid render-blocking
   },
   image: {
     domains: [],
@@ -80,9 +80,29 @@ export default defineConfig({
       sourcemap: false,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'react-vendor': ['react', 'react-dom'],
-            'ui-vendor': ['lucide-react'],
+          manualChunks: (id) => {
+            // Split React core into smaller chunks for better tree-shaking
+            if (id.includes('node_modules/react/') && !id.includes('react-dom')) {
+              return 'react-core';
+            }
+            if (id.includes('node_modules/react-dom/')) {
+              return 'react-dom-core';
+            }
+            // Split lucide-react icons into separate chunk - load on demand
+            if (id.includes('node_modules/lucide-react')) {
+              return 'ui-vendor';
+            }
+            // Split each React component into its own chunk for better parallel loading
+            if (id.includes('/components/react/')) {
+              const componentName = id.split('/components/react/')[1]?.split('.')[0];
+              if (componentName) {
+                return `component-${componentName}`;
+              }
+            }
+            // Keep vendor chunks separate
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
           },
           compact: true,
         },
