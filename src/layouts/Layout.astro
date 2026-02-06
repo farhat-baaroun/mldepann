@@ -53,23 +53,6 @@ const {
   <link rel="prefetch" href="/images/webp/service-depannage.webp" as="image" />
   <link rel="prefetch" href="/images/webp/service-batterie.webp" as="image" />
   
-  <!-- Defer React loading - use requestIdleCallback to load after critical content -->
-  <script is:inline>
-    // Defer React vendor chunk loading until after LCP
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => {
-        // Prefetch React chunks with low priority (will be loaded on demand)
-        const chunks = ['react-core', 'react-dom-core'];
-        chunks.forEach(chunk => {
-          const link = document.createElement('link');
-          link.rel = 'prefetch';
-          link.as = 'script';
-          link.href = '/_assets/' + chunk + '.js';
-          document.head.appendChild(link);
-        });
-      }, { timeout: 3000 });
-    }
-  </script>
   
   <!-- Prefetch Likely Next Resources -->
   <link rel="prefetch" href="/images/webp/service-depannage.webp" as="image" />
@@ -89,6 +72,8 @@ const {
       --brand-blue:#1b3a6e;
       --brand-blue-light:#2d5aa0;
       --brand-orange:#e67e22;
+      --brand-orange-dark:#d35400;
+      --brand-orange-light:#ffa500;
       --brand-green:#27ae60;
       --brand-gray:#333;
       --brand-gray-light:#f5f5f5;
@@ -157,10 +142,14 @@ const {
     .bg-transparent{background-color:transparent}
     .bg-brand-blue{background-color:var(--brand-blue)}
     .bg-brand-orange{background-color:var(--brand-orange)}
+    .bg-brand-orange-dark{background-color:var(--brand-orange-dark)}
     .bg-brand-gray-light{background-color:var(--brand-gray-light)}
     .text-brand-blue{color:var(--brand-blue)}
     .text-brand-orange{color:var(--brand-orange)}
+    .text-brand-orange-dark{color:var(--brand-orange-dark)}
+    .text-brand-orange-light{color:var(--brand-orange-light)}
     .text-brand-gray{color:var(--brand-gray)}
+    @media(min-width:768px){.md\:text-brand-orange-light{color:var(--brand-orange-light)}}
     
     /* Spacing */
     .p-4{padding:1rem}

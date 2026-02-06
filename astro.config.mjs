@@ -81,14 +81,11 @@ export default defineConfig({
       rollupOptions: {
         output: {
           manualChunks: (id) => {
-            // Split React core into smaller chunks for better tree-shaking
-            if (id.includes('node_modules/react/') && !id.includes('react-dom')) {
-              return 'react-core';
+            // Split React into separate chunk
+            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+              return 'react-vendor';
             }
-            if (id.includes('node_modules/react-dom/')) {
-              return 'react-dom-core';
-            }
-            // Split lucide-react icons into separate chunk - load on demand
+            // Split lucide-react icons into separate chunk
             if (id.includes('node_modules/lucide-react')) {
               return 'ui-vendor';
             }
@@ -98,10 +95,6 @@ export default defineConfig({
               if (componentName) {
                 return `component-${componentName}`;
               }
-            }
-            // Keep vendor chunks separate
-            if (id.includes('node_modules')) {
-              return 'vendor';
             }
           },
           compact: true,
