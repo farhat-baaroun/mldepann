@@ -1,0 +1,84 @@
+---
+import ContactForm from '../react/ContactForm';
+
+const phoneNumber = '06 89 08 76 23'
+const phoneLink = 'tel:+33689087623'
+
+const contactItems = [
+  {
+    title: 'Téléphone',
+    content: phoneNumber,
+    href: phoneLink,
+  },
+  {
+    title: 'Email',
+    content: 'contact@mldepann.fr',
+    href: 'mailto:contact@mldepann.fr',
+  },
+  {
+    title: 'Adresse',
+    content: '123 Avenue de Paris, 75001 Paris',
+    href: '#',
+  },
+  {
+    title: 'Horaires',
+    content: '24h/24 - 7j/7',
+    href: '#',
+  },
+]
+---
+
+<section id="contact" class="py-20 md:py-28 bg-brand-gray-light">
+  <div class="container mx-auto px-4 md:px-6">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-bold text-brand-blue mb-4">
+        Contactez-Nous
+      </h2>
+      <p class="text-brand-gray max-w-2xl mx-auto">
+        Disponible 24h/24 et 7j/7
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+      <!-- Contact Info -->
+      <div class="space-y-6">
+        {contactItems.map((item, index) => {
+          let iconPath = '';
+          if (item.title === 'Téléphone') {
+            iconPath = 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z';
+          } else if (item.title === 'Email') {
+            iconPath = 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z';
+          } else if (item.title === 'Adresse') {
+            iconPath = 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z';
+          } else {
+            iconPath = 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z';
+          }
+          return (
+            <a
+              href={item.href}
+              class="flex items-start gap-4 p-5 bg-white rounded-xl shadow hover:shadow-lg transition-shadow"
+            >
+              <div class="w-12 h-12 rounded-full bg-brand-blue/10 flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPath} />
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-brand-blue mb-1">
+                  {item.title}
+                </h4>
+                <p class="text-brand-gray/70">{item.content}</p>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+
+      <!-- Contact Form -->
+      <div class="bg-white rounded-2xl p-6 md:p-8 shadow">
+        <ContactForm client:load />
+      </div>
+    </div>
+  </div>
+</section>
+

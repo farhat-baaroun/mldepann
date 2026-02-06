@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import aboutTeam from '../../assets/images/webp/about-team.webp';
+
+const stats = [
+  { value: '10+', label: 'Années' },
+  { value: '5000+', label: 'Interventions' },
+  { value: '24/7', label: 'Disponible' },
+]
+
+const features = [
+  'Fiabilité garantie',
+  'Expérience confirmée',
+  'Sécurité maximale',
+]
+---
+
+<section id="about" class="py-20 md:py-28 bg-brand-gray-light">
+  <div class="container mx-auto px-4 md:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div>
+        <div class="relative" style="aspect-ratio: 4/5;">
+          <Image
+            src={aboutTeam}
+            alt="Équipe mldepann"
+            class="rounded-2xl shadow-xl w-full h-full object-cover"
+            width={600}
+            height={750}
+            loading="lazy"
+            format="webp"
+            quality={85}
+            decoding="async"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+          <div class="absolute -bottom-6 -right-6 bg-brand-orange text-white rounded-2xl p-6 shadow-lg">
+            <div class="text-3xl font-bold">10+</div>
+            <div class="text-sm">Années d'expérience</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-brand-blue mb-4">
+          Une Histoire de Confiance
+        </h2>
+        <p class="text-brand-gray/80 mb-6 leading-relaxed">
+          Depuis plus de 10 ans, nous accompagnons les automobilistes d'Île-de-France 
+          en situation d'urgence. Notre mission : vous offrir un service rapide, 
+          professionnel et humain, pour que vous retrouviez la route en toute sérénité.
+        </p>
+
+        <div class="grid grid-cols-3 gap-6 mb-8">
+          {stats.map((stat) => (
+            <div class="text-center">
+              <div class="text-2xl md:text-3xl font-bold text-brand-blue">
+                {stat.value}
+              </div>
+              <div class="text-xs md:text-sm text-brand-gray/60">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          {features.map((item) => (
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="text-sm text-brand-gray/80">{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
